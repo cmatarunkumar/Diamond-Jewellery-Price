@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Jewellery Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@200;300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#F0DC88;--gold-d:#7A6330;--gold-bg:rgba(201,168,76,.07);
+  --bg:#07070F;--bg2:#0D0D1A;--bg3:#131320;--surf:#181828;
+  --bdr:#252538;--bdr2:#32324A;
+  --txt:#EDE8E0;--txt2:#9A94A8;--txt3:#55506A;
+  --dia:#9ECFE8;--green:#52C87A;--red:#E06868;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 60% 50% at 5% 5%,rgba(201,168,76,.05) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 60% at 95% 90%,rgba(112,216,176,.04) 0%,transparent 55%)}
+
+/* ── LAYOUT ── */
+.outer{position:relative;z-index:1;display:block;height:100vh;overflow:hidden}
+.page{display:grid;grid-template-columns:360px 1fr;height:100vh}
+.left-panel{background:var(--bg2);border-right:1px solid var(--bdr);padding:18px 16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;height:100vh}
+.right-panel{padding:18px 16px;overflow-y:auto;height:100vh;display:flex;flex-direction:column;gap:12px}
+
+/* ── PHOTO TOP BAR ── */
+.photo-top-bar{background:var(--bg3);border:1px solid var(--bdr);border-radius:2px;padding:12px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;position:relative;overflow:hidden}
+.photo-top-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-d),transparent)}
+.ptb-main{flex-shrink:0;position:relative;width:100%;height:160px;border-radius:2px;overflow:hidden;border:1px solid var(--bdr2)}
+.ptb-main img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .35s}
+.ptb-main .ptb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,15,.65) 0%,transparent 55%)}
+.ptb-main .ptb-src{position:absolute;top:4px;right:5px;font-size:.38rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);background:rgba(0,0,0,.4);padding:1px 4px;border-radius:1px}
+
+
+
+
+
+
+
+
+.ptb-caption::placeholder{color:var(--txt3);font-size:.62rem}
+
+
+
+/* ── BRAND ── */
+.brand{text-align:center;padding-bottom:14px;border-bottom:1px solid var(--bdr)}
+.brand-gem{font-size:1.5rem;margin-bottom:5px;filter:drop-shadow(0 0 8px rgba(158,207,232,.4))}
+.brand h1{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:#FFFFFF;letter-spacing:.08em;line-height:1.1}
+.brand h1 em{font-style:italic;color:var(--gold-l)}
+.brand p{font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;color:var(--txt2);margin-top:4px}
+
+/* ── SECTION ── */
+.sec-lbl{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#E8C96A;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.sn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-d);font-size:.48rem;font-weight:500;color:var(--gold);flex-shrink:0}
+.divider{height:1px;background:var(--bdr)}
+
+/* ── FIELDS ── */
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:#C8C0D8}
+input,select{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);font-family:'Outfit',sans-serif;font-size:.76rem;font-weight:300;padding:7px 10px;border-radius:1px;outline:none;transition:border-color .2s;-webkit-appearance:none;width:100%}
+input:focus,select:focus{border-color:var(--gold-d)}
+input::placeholder{color:var(--txt3);opacity:.5;font-size:.68rem}
+select option{background:var(--bg3)}
+input[type=number]::-webkit-inner-spin-button{opacity:.3}
+input[readonly]{background:transparent;border-color:transparent;color:var(--txt2);padding-left:0;font-size:.72rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+
+/* range */
+input[type=range]{-webkit-appearance:none;height:2px;background:var(--bdr);border:none;padding:0;cursor:pointer;border-radius:2px;margin-top:5px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);cursor:pointer}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:4px}
+.pill{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt3);font-size:.5rem;letter-spacing:.07em;text-transform:uppercase;padding:5px 9px;cursor:pointer;border-radius:1px;transition:all .15s;white-space:nowrap}
+.pill:hover{border-color:var(--bdr2);color:var(--txt2)}
+.pill.active{background:var(--gold-bg);border-color:var(--gold);color:var(--gold-l)}
+
+/* ── MATCHED PRICE BOX ── */
+.price-match-box{display:none;background:rgba(201,168,76,.06);border:1px solid var(--gold-d);border-radius:1px;padding:12px 16px;margin-top:10px;position:relative;overflow:hidden}
+.price-match-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.price-match-box.show{display:block}
+.pmb-label{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.pmb-price{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold-l);line-height:1;text-shadow:0 0 20px rgba(201,168,76,.3)}
+.pmb-unit{font-size:.55rem;color:var(--gold-l);letter-spacing:.1em;margin-top:2px}
+.pmb-detail{font-size:.58rem;color:var(--txt2);margin-top:6px;letter-spacing:.04em}
+.pmb-total{font-size:.7rem;color:var(--txt2);margin-top:4px}
+.pmb-total span{color:var(--gold-l);font-family:'Cormorant Garamond',serif;font-size:.95rem}
+.no-match-box{display:none;background:rgba(224,104,104,.05);border:1px solid rgba(224,104,104,.2);border-radius:1px;padding:10px 14px;margin-top:10px;font-size:.62rem;color:var(--red);letter-spacing:.04em}
+.no-match-box.show{display:block}
+
+/* ── GOLD RATES ── */
+.live-dot{display:inline-flex;align-items:center;gap:4px;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:#70D890;margin-bottom:8px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+.rate-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
+.gr{background:var(--bg);border:1px solid var(--bdr);padding:8px 5px;text-align:center;border-radius:1px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.gr::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-d),transparent);opacity:0;transition:opacity .2s}
+.gr:hover{border-color:var(--gold-d);background:var(--bg2)}
+.gr.selected{background:rgba(201,168,76,.1);border-color:var(--gold);box-shadow:0 0 0 1px var(--gold-d) inset}
+.gr.selected::before{opacity:1}
+.gr.selected .gr-k{color:var(--gold)}
+.gr.selected .gr-v{color:var(--gold-l);text-shadow:0 0 12px rgba(201,168,76,.4)}
+.gr.selected .gr-p{color:var(--gold-d)}
+.gr-k{font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;color:#A8A0B8;margin-bottom:2px;transition:color .2s}
+.gr-v{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:#D8D0E8;transition:color .2s}
+.gr-p{font-size:.44rem;color:#8880A0;transition:color .2s}
+.gr-check{position:absolute;top:3px;right:4px;font-size:.52rem;color:var(--gold);opacity:0;transition:opacity .2s}
+.gr.selected .gr-check{opacity:1}
+
+/* ── CALC BTN ── */
+.calc-btn{width:100%;background:linear-gradient(135deg,var(--gold-d),var(--gold),var(--gold-d));background-size:200%;border:none;color:var(--bg);font-family:'Outfit',sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px;cursor:pointer;border-radius:1px;transition:background-position .4s,transform .2s,box-shadow .3s;margin-top:auto}
+.calc-btn:hover{background-position:right;box-shadow:0 4px 18px rgba(201,168,76,.3);transform:translateY(-1px)}
+
+
+
+/* ── SUMMARY BOXES ── */
+.summary-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.sum-box{border-radius:2px;padding:16px;position:relative;overflow:hidden;border:1px solid var(--bdr)}
+.sum-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sum-box.diamond{background:rgba(158,207,232,.06);border-color:rgba(158,207,232,.3)}
+.sum-box.diamond::before{background:linear-gradient(to right,transparent,#9ECFE8,transparent)}
+.sum-box.gold{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.35)}
+.sum-box.gold::before{background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.sum-box.making{background:rgba(112,216,176,.06);border-color:rgba(112,216,176,.3)}
+.sum-box.making::before{background:linear-gradient(to right,transparent,#70D8B0,transparent)}
+.sum-box .sb-icon{font-size:1.2rem;margin-bottom:8px}
+.sum-box .sb-lbl{font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
+.sum-box.diamond .sb-lbl{color:#9ECFE8}
+.sum-box.gold .sb-lbl{color:var(--gold)}
+.sum-box.making .sb-lbl{color:#70D8B0}
+.sum-box .sb-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;line-height:1;color:#FFFFFF}
+.sum-box .sb-sub{font-size:.52rem;color:#A8A0B8;margin-top:4px;line-height:1.5}
+
+/* ── RESULT ── */
+.result-card{background:var(--bg2);border:1px solid var(--gold-d);border-radius:2px;padding:18px;position:relative;display:none}
+.result-card.show{display:block}
+.result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.res-lbl{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);margin-bottom:5px;text-align:center}
+.price-big{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--gold-l);text-align:center;text-shadow:0 0 30px rgba(201,168,76,.2);line-height:1}
+.price-qty{font-size:.58rem;color:var(--txt2);text-align:center;margin-top:3px;letter-spacing:.05em}
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
+.bk{background:var(--surf);border:1px solid var(--bdr);padding:8px 11px;border-radius:1px}
+.bk .bl{font-size:.46rem;letter-spacing:.13em;text-transform:uppercase;color:#A8A0B8;margin-bottom:2px}
+.bk .bv{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--txt)}
+.formula{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);border-radius:1px;padding:9px 12px;margin-top:9px;font-size:.56rem;color:var(--txt2);line-height:1.7;letter-spacing:.03em}
+.formula b{color:var(--gold-l);font-weight:400}
+.disc{text-align:center;font-size:.5rem;color:var(--txt2);margin-top:8px;letter-spacing:.04em;line-height:1.5}
+
+
+/* ── PHOTO PANEL ── */
+.photo-panel{background:var(--surf);border:1px solid var(--bdr);border-radius:2px;padding:16px;position:relative;overflow:hidden;flex-shrink:0}
+.photo-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-d),transparent)}
+.photo-panel-title{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#E8C96A;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.photo-panel-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.photo-main-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:1px;overflow:hidden;background:var(--bg3);margin-bottom:10px}
+.photo-main-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .4s}
+.photo-main-wrap .photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,15,.7) 0%,transparent 50%)}
+.photo-main-wrap .photo-label{position:absolute;bottom:10px;left:12px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#fff;font-weight:300;letter-spacing:.04em}
+.photo-main-wrap .photo-sublabel{position:absolute;bottom:10px;right:12px;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.photo-thumbs{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px}
+.photo-thumbs::-webkit-scrollbar{height:3px}
+.photo-thumbs::-webkit-scrollbar-thumb{background:var(--bdr2)}
+.photo-thumb-item{flex-shrink:0;width:60px;height:60px;border-radius:1px;overflow:hidden;cursor:pointer;border:1px solid var(--bdr);transition:border-color .2s;position:relative}
+.photo-thumb-item:hover{border-color:var(--gold-d)}
+.photo-thumb-item.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold-d)}
+.photo-thumb-item img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb-group-label{flex-shrink:0;display:flex;align-items:center;font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);white-space:nowrap;padding:0 4px;border-left:2px solid var(--bdr2);}
+.photo-thumb-item .pt-lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.65);font-size:.38rem;letter-spacing:.06em;text-align:center;color:#fff;padding:2px 2px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.photo-upload-row{display:flex;gap:8px;margin-top:10px;align-items:center}
+.photo-upload-row input[type=text]{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);font-family:'Outfit',sans-serif;font-size:.7rem;padding:6px 10px;border-radius:1px;outline:none;flex:1;transition:border-color .2s}
+.photo-upload-row input[type=text]:focus{border-color:var(--gold-d)}
+.photo-upload-row input[type=text]::placeholder{color:var(--txt3);font-size:.65rem}
+.btn-upload-own{background:rgba(158,207,232,.08);border:1px solid rgba(158,207,232,.3);color:var(--dia);font-family:'Outfit',sans-serif;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;cursor:pointer;border-radius:1px;transition:all .2s;position:relative;overflow:hidden;white-space:nowrap;flex-shrink:0}
+.btn-upload-own:hover{background:rgba(158,207,232,.14)}
+.btn-upload-own input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.uploaded-strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.uploaded-item{position:relative;width:52px;height:52px;border-radius:1px;overflow:hidden;border:1px solid var(--bdr)}
+.uploaded-item img{width:100%;height:100%;object-fit:cover}
+.uploaded-item .ud{position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:rgba(10,10,20,.85);border:none;color:#fff;font-size:.5rem;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1}
+.uploaded-item:hover .ud{display:flex}
+
+
+/* ── STONE TOGGLE ── */
+.stone-toggle{display:flex;gap:0;border:1px solid var(--bdr);border-radius:2px;overflow:hidden;margin-bottom:12px}
+.st-btn{flex:1;padding:8px 10px;text-align:center;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;background:var(--bg3);color:var(--txt3);border:none;font-family:'Outfit',sans-serif;transition:all .2s;border-right:1px solid var(--bdr)}
+.st-btn:last-child{border-right:none}
+.st-btn.active{background:var(--gold-bg);color:var(--gold-l);border-color:var(--gold-d)}
+.st-btn:hover:not(.active){color:var(--txt2)}
+
+/* ── MULTI-STONE TABLE ── */
+.ms-table-wrap{overflow-x:auto;border:1px solid var(--bdr);border-radius:1px;margin-bottom:8px}
+.ms-table{width:100%;border-collapse:collapse;font-size:.7rem;min-width:480px}
+.ms-table th{font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);padding:7px 8px;border-bottom:1px solid var(--bdr);text-align:left;font-weight:400;background:var(--bg3);white-space:nowrap}
+.ms-table td{padding:5px 6px;border-bottom:1px solid rgba(37,37,56,.5);vertical-align:middle}
+.ms-table tr:last-child td{border-bottom:none}
+.ms-table select,.ms-table input{background:var(--bg2);border:1px solid var(--bdr);color:var(--txt);font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:300;padding:4px 6px;border-radius:1px;outline:none;width:100%;transition:border-color .2s}
+.ms-table select:focus,.ms-table input:focus{border-color:var(--gold-d)}
+.ms-table .ppc-cell{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gold-l);text-align:right;white-space:nowrap}
+.ms-table .total-cell{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--txt);text-align:right;white-space:nowrap}
+.ms-table .match-ok{color:var(--green);font-size:.6rem}
+.ms-table .match-no{color:var(--red);font-size:.6rem}
+.del-row-btn{background:none;border:none;color:var(--txt3);cursor:pointer;font-size:.75rem;padding:2px 5px;transition:color .2s}
+.del-row-btn:hover{color:var(--red)}
+.add-row-btn{background:rgba(82,200,122,.06);border:1px solid rgba(82,200,122,.25);color:var(--green);font-family:'Outfit',sans-serif;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;padding:6px 14px;cursor:pointer;border-radius:1px;transition:all .2s;width:100%}
+.add-row-btn:hover{background:rgba(82,200,122,.12)}
+.ms-grand{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--gold-bg);border:1px solid var(--gold-d);border-radius:1px;margin-top:6px}
+.ms-grand .mg-lbl{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.ms-grand .mg-val{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold-l)}
+
+
+/* ── DESIGN STYLE GRID ── */
+.design-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.design-pill{background:var(--bg3);border:1px solid var(--bdr);border-radius:2px;padding:8px 6px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden}
+.design-pill::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--bdr2),transparent);transition:all .2s}
+.design-pill:hover{border-color:var(--gold-d);background:var(--bg2)}
+.design-pill.active{background:rgba(201,168,76,.1);border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,168,76,.15) inset}
+.design-pill.active::before{background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.design-pill .dp-icon{font-size:1.1rem;display:block;margin-bottom:4px;line-height:1}
+.design-pill .dp-name{font-size:.52rem;letter-spacing:.06em;color:var(--txt2);display:block;line-height:1.3;font-weight:400}
+.design-pill.active .dp-name{color:var(--gold-l)}
+.design-pill .dp-mult{font-size:.44rem;letter-spacing:.08em;color:var(--txt3);display:block;margin-top:2px}
+.design-pill.active .dp-mult{color:var(--gold-d)}
+
+/* Selected bar */
+.design-selected-bar{margin-top:8px;padding:8px 12px;background:rgba(201,168,76,.06);border:1px solid var(--gold-d);border-radius:1px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dsb-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold-l);font-weight:300}
+.dsb-mult{font-size:.56rem;letter-spacing:.1em;color:var(--gold);background:rgba(201,168,76,.1);padding:2px 8px;border-radius:1px;border:1px solid var(--gold-d)}
+.dsb-desc{font-size:.56rem;color:var(--txt3);letter-spacing:.04em;flex:1}
+
+
+/* ── DESIGN PHOTO GALLERY ── */
+
+
+.dyn-photo-main{position:relative;width:250px;height:250px;border-radius:2px;overflow:hidden;border:1px solid var(--bdr2);background:var(--bg3);flex-shrink:0}
+.dyn-photo-main img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .4s}
+.dyn-photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,15,.75) 0%,transparent 45%);pointer-events:none}
+.dyn-photo-label{position:absolute;bottom:3px;left:5px;font-family:'Cormorant Garamond',serif;font-size:.65rem;color:#fff;font-weight:300;letter-spacing:.03em;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.dyn-photo-src{display:none}
+@media(max-width:900px){.outer{height:auto}.page{grid-template-columns:1fr;height:auto}.left-panel,.right-panel{height:auto}.ptb-main{height:120px}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div class="outer">
+
+<div class="page">
+
+<!-- ═══════════════════════ LEFT PANEL ═══════════════════════ -->
+<div class="left-panel">
+
+  <div class="brand">
+    <div class="brand-gem">💎</div>
+    <h1>Diamond Jewellery <em>Pricing</em></h1>
+    <p>Lab Grown · IBJA Rates · MSRP Dec 2025</p>
+  </div>
+
+  <!-- DYNAMIC PHOTO -->
+  <div style="display:flex;justify-content:center;">
+    <div class="dyn-photo-main">
+      <img id="photoMain"
+        src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=250&h=250&fit=crop&q=80&auto=format"
+        alt="Jewellery Reference">
+      <div class="dyn-photo-overlay">
+        <span class="dyn-photo-label" id="pgSelectedLabel">Ring</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Jewellery Type -->
+  <div>
+    <div class="sec-lbl"><span class="sn">1</span>Jewellery Type</div>
+    <div class="g2" style="margin-bottom:8px">
+      <div class="field"><label>Category</label>
+        <select id="jewCat" onchange="updateSubtype()">
+          <option value="ring">Ring</option>
+          <option value="necklace">Necklace</option>
+          <option value="pendant">Pendant</option>
+          <option value="earring">Earrings</option>
+          <option value="bangle">Bangle</option>
+          <option value="bracelet">Bracelet</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Subtype</label>
+        <select id="jewSub"></select>
+      </div>
+    </div>
+    <div style="margin-bottom:8px">
+      <div class="sec-lbl" style="margin-bottom:10px">✦ Design Style</div>
+      <div class="design-grid" id="designPills"></div>
+      <div class="design-selected-bar" id="designSelectedBar" style="display:none">
+        <span class="dsb-name" id="dsbName"></span>
+        <span class="dsb-mult" id="dsbMult"></span>
+        <span class="dsb-desc" id="dsbDesc"></span>
+      </div>
+    </div>
+    <div class="field"><label>Quantity (pieces)</label>
+      <input type="number" id="qty" value="1" min="1">
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 2: Diamond Details -->
+  <div>
+    <div class="sec-lbl"><span class="sn">2</span>Diamond Details</div>
+
+    <!-- Toggle -->
+    <div class="stone-toggle">
+      <button class="st-btn active" id="toggleSingle" onclick="switchStoneMode('single')">◆ Single Stone</button>
+      <button class="st-btn" id="toggleMulti"  onclick="switchStoneMode('multi')">◈ Multiple Stones</button>
+    </div>
+
+    <!-- SINGLE STONE -->
+    <div id="singleStoneSection">
+      <div class="g3" style="margin-bottom:8px">
+        <div class="field"><label>Carat Range</label>
+          <select id="dCaratRange" onchange="updateColorClarity()">
+            <option value="">— Select —</option>
+            <option value="0.01-0.08">0.01 – 0.08</option>
+            <option value="0.09-0.49">0.09 – 0.49</option>
+            <option value="0.50-0.69">0.50 – 0.69</option>
+            <option value="0.70-0.89">0.70 – 0.89</option>
+            <option value="0.90-0.99">0.90 – 0.99</option>
+            <option value="1.00-1.49">1.00 – 1.49</option>
+            <option value="1.50-1.99">1.50 – 1.99</option>
+            <option value="2.00-2.99">2.00 – 2.99</option>
+            <option value="3.00-3.99">3.00 – 3.99</option>
+            <option value="4.00-4.99">4.00 – 4.99</option>
+            <option value="5.00-9.99">5.00 – 9.99</option>
+            <option value="10.00-12.99">10.00 – 12.99</option>
+          </select>
+        </div>
+        <div class="field"><label>Color</label>
+          <select id="dColor" onchange="doMatch()"><option value="">— Select —</option></select>
+        </div>
+        <div class="field"><label>Clarity</label>
+          <select id="dClarity" onchange="doMatch()"><option value="">— Select —</option></select>
+        </div>
+      </div>
+      <div class="g2" style="margin-bottom:8px">
+        <div class="field"><label>No. of Diamonds</label>
+          <input type="number" id="dCount" value="1" min="1" oninput="updateMatchBox()">
+        </div>
+        <div class="field"><label>Exact Carat (ct)</label>
+          <input type="number" id="dCarat" placeholder="e.g. 0.50" min="0.001" step="0.001" oninput="updateMatchBox()">
+        </div>
+      </div>
+      <div class="price-match-box" id="priceMatchBox">
+        <div class="pmb-label">Matched Price — Lab Grown Diamond MSRP</div>
+        <div class="pmb-price" id="pmbPrice">—</div>
+        <div class="pmb-unit">per carat (₹)</div>
+        <div class="pmb-detail" id="pmbDetail"></div>
+        <div class="pmb-total" id="pmbTotal"></div>
+      </div>
+      <div class="no-match-box" id="noMatchBox">
+        ✕ No price found for this combination. Please check your selection.
+      </div>
+    </div>
+
+    <!-- MULTIPLE STONES -->
+    <div id="multiStoneSection" style="display:none">
+      <div class="ms-table-wrap">
+        <table class="ms-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Carat Range</th>
+              <th>Color</th>
+              <th>Clarity</th>
+              <th>Exact Ct</th>
+              <th>Count</th>
+              <th style="text-align:right">₹/Ct</th>
+              <th style="text-align:right">Total ₹</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="msTableBody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addStoneRow()">+ Add Stone Row</button>
+      <div class="ms-grand" id="msGrand" style="display:none">
+        <span class="mg-lbl">Total Diamond Value</span>
+        <span class="mg-val" id="msGrandTotal">₹0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 3: Gold -->
+  <div>
+    <div class="sec-lbl"><span class="sn">3</span>Gold Details</div>
+    <div class="live-dot"><div class="dot"></div><span id="ibjaStatus">IBJA · Fetching live rates…</span></div>
+    <div class="rate-row">
+      <div class="gr" id="gr_24" onclick="selectGold(24)">
+        <div class="gr-check">✓</div>
+        <div class="gr-k">24K — 999</div>
+        <div class="gr-v" id="grv_24">₹15,488</div>
+        <div class="gr-p">/gram</div>
+      </div>
+      <div class="gr selected" id="gr_22" onclick="selectGold(22)">
+        <div class="gr-check">✓</div>
+        <div class="gr-k">22K — 916</div>
+        <div class="gr-v" id="grv_22">₹14,187</div>
+        <div class="gr-p">/gram</div>
+      </div>
+      <div class="gr" id="gr_18" onclick="selectGold(18)">
+        <div class="gr-check">✓</div>
+        <div class="gr-k">18K — 750</div>
+        <div class="gr-v" id="grv_18">₹11,616</div>
+        <div class="gr-p">/gram</div>
+      </div>
+      <div class="gr" id="gr_14" onclick="selectGold(14)">
+        <div class="gr-check">✓</div>
+        <div class="gr-k">14K — 583</div>
+        <div class="gr-v" id="grv_14">₹9,060</div>
+        <div class="gr-p">/gram</div>
+      </div>
+    </div>
+    <input type="hidden" id="goldPurity" value="22">
+    <div class="g2" style="margin-bottom:8px">
+      <div class="field"><label>Weight (g)</label>
+        <input type="number" id="goldWt" value="8.00" min="0" step="0.01" oninput="calcLabour()">
+      </div>
+      <div class="field"><label>Rate (₹/g) — editable</label>
+        <input type="number" id="goldRate" value="14187" min="1" oninput="calcLabour()">
+      </div>
+    </div>
+    <div class="g2">
+      <div class="field"><label>Metal Cost</label>
+        <input type="text" id="goldCostDisp" readonly>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 4: Making -->
+  <div>
+    <div class="sec-lbl"><span class="sn">4</span>Making Charges</div>
+    <div class="g2" style="margin-bottom:8px">
+      <div class="field"><label>Labour (₹/g)</label>
+        <input type="number" id="labourRate" value="3600" min="0" oninput="labourManual=false;calcLabour()">
+      </div>
+      <div class="field"><label>Labour Amt (₹)</label>
+        <input type="number" id="labourAmt" placeholder="Auto" oninput="labourManual=true">
+      </div>
+    </div>
+    <div class="g2" style="margin-bottom:8px">
+      <div class="field"><label>Plating (₹)</label>
+        <input type="number" id="plating" value="0" min="0">
+      </div>
+      <div class="field"><label>Other (₹)</label>
+        <input type="number" id="extras" value="0" min="0">
+      </div>
+    </div>
+    <div class="g2" style="margin-bottom:6px">
+      <div class="field"><label>GST (%)</label>
+        <select id="gst">
+          <option value="3" selected>3%</option>
+          <option value="5">5%</option>
+          <option value="18">18%</option>
+          <option value="0">0%</option>
+        </select>
+      </div>
+      <div class="field"><label>TCS (%)</label>
+        <input type="number" id="tcs" value="1" min="0" max="20" step="0.5">
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">Calculate Final Price</button>
+
+</div><!-- /left-panel -->
+
+<!-- ═══════════════════════ RIGHT PANEL ═══════════════════════ -->
+<div class="right-panel">
+
+
+  <!-- Result -->
+  <!-- 3 Summary Boxes -->
+  <div class="summary-boxes" id="summaryBoxes" style="display:none">
+    <div class="sum-box diamond">
+      <div class="sb-icon">💎</div>
+      <div class="sb-lbl">Diamond Value</div>
+      <div class="sb-val" id="sbDiamond">—</div>
+      <div class="sb-sub" id="sbDiamondSub"></div>
+    </div>
+    <div class="sum-box gold">
+      <div class="sb-icon">🪙</div>
+      <div class="sb-lbl">Gold Value</div>
+      <div class="sb-val" id="sbGold">—</div>
+      <div class="sb-sub" id="sbGoldSub"></div>
+    </div>
+    <div class="sum-box making">
+      <div class="sb-icon">🔨</div>
+      <div class="sb-lbl">Making Charges</div>
+      <div class="sb-val" id="sbMaking">—</div>
+      <div class="sb-sub" id="sbMakingSub"></div>
+    </div>
+  </div>
+
+  <div class="result-card" id="result">
+    <div class="res-lbl">Estimated Retail Price — Per Piece</div>
+    <div class="price-big" id="finalPrice">—</div>
+    <div class="price-qty" id="priceRange"></div>
+    <div class="bk-grid" id="breakdown"></div>
+    <div class="formula" id="formula"></div>
+    <div class="disc">IBJA 19 Mar 2026 · LGD MSRP Dec 2025 · Prices are indicative estimates.</div>
+  </div>
+
+</div><!-- /right-panel -->
+</div><!-- /page -->
+</div><!-- /outer -->
+
+<script>
+window.onerror=function(){return true;};
+window.addEventListener("unhandledrejection",function(e){e.preventDefault();});
+var designMult = 1.00;
+
+function selectDesignPill(el){
+  if(!el) return;
+  document.querySelectorAll('.design-pill').forEach(function(p){ p.classList.remove('active'); });
+  el.classList.add('active');
+  designMult = parseFloat(el.dataset.val) || 1.00;
+  showDesignBar(el.dataset.name || '', el.dataset.val || '1.00', el.dataset.desc || '');
+  // Refresh gallery with new design style
+  }
+
+function showDesignBar(name, val, desc){
+  var bar = document.getElementById('designSelectedBar');
+  if(!bar) return;
+  bar.style.display = 'flex';
+  var nameEl = document.getElementById('dsbName');
+  var multEl = document.getElementById('dsbMult');
+  var descEl = document.getElementById('dsbDesc');
+  if(nameEl) nameEl.textContent = name;
+  if(multEl) multEl.textContent = 'x' + parseFloat(val).toFixed(2);
+  if(descEl) descEl.textContent = desc;
+}
+/* Suppress all console errors from showing */
+window.onerror = function(){ return true; };
+window.addEventListener('unhandledrejection', function(e){ e.preventDefault(); });
+
+/* ══ PRICE DATA ══ */
+const priceList = [{"ctFrom": 0.01, "ctTo": 0.08, "color": "DEF/EF", "clarity": "VVS-VS", "ppc": 36000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "DEF/EF", "clarity": "VS", "ppc": 33000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "DEF/EF", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "G-I", "clarity": "VVS-VS", "ppc": 33000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "G-I", "clarity": "VS", "ppc": 27000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "G-I", "clarity": "VS/SI", "ppc": 23400}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "JK", "clarity": "VVS-VS", "ppc": 27000}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "JK", "clarity": "VS", "ppc": 23400}, {"ctFrom": 0.01, "ctTo": 0.08, "color": "JK", "clarity": "VS/SI", "ppc": 23400}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "DEF/EF", "clarity": "VVS-VS", "ppc": 36000}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "DEF/EF", "clarity": "VS", "ppc": 33300}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "DEF/EF", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "G-I", "clarity": "VVS-VS", "ppc": 33300}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "G-I", "clarity": "VS", "ppc": 27000}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "G-I", "clarity": "VS/SI", "ppc": 23400}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "JK", "clarity": "VVS-VS", "ppc": 27000}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "JK", "clarity": "VS", "ppc": 23400}, {"ctFrom": 0.09, "ctTo": 0.49, "color": "JK", "clarity": "VS/SI", "ppc": 23400}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "DEF/EF", "clarity": "VVS-VS", "ppc": 45000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "DEF/EF", "clarity": "VS", "ppc": 42300}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "DEF/EF", "clarity": "VS/SI", "ppc": 36000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "G-I", "clarity": "VVS-VS", "ppc": 42300}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "G-I", "clarity": "VS", "ppc": 36000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "G-I", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "JK", "clarity": "VVS-VS", "ppc": 36000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "JK", "clarity": "VS", "ppc": 27000}, {"ctFrom": 0.5, "ctTo": 0.69, "color": "JK", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "DEF/EF", "clarity": "VVS-VS", "ppc": 45000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "DEF/EF", "clarity": "VS", "ppc": 42300}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "DEF/EF", "clarity": "VS/SI", "ppc": 36000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "G-I", "clarity": "VVS-VS", "ppc": 42300}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "G-I", "clarity": "VS", "ppc": 36000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "G-I", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "JK", "clarity": "VVS-VS", "ppc": 36000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "JK", "clarity": "VS", "ppc": 27000}, {"ctFrom": 0.7, "ctTo": 0.89, "color": "JK", "clarity": "VS/SI", "ppc": 27000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "IF", "ppc": 63000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "VVS1", "ppc": 54000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "VVS2", "ppc": 49500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "VS1", "ppc": 45000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "VS2", "ppc": 42300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "D", "clarity": "SI1", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "IF", "ppc": 54000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "VVS1", "ppc": 49500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "VVS2", "ppc": 45000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "VS1", "ppc": 42300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "VS2", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "E", "clarity": "SI1", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "IF", "ppc": 49500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "VVS1", "ppc": 45000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "VVS2", "ppc": 42300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "VS1", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "VS2", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "F", "clarity": "SI1", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "IF", "ppc": 45000}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "VVS1", "ppc": 42300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "VVS2", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "VS1", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "VS2", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "G", "clarity": "SI1", "ppc": 35100}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "IF", "ppc": 42300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "VVS1", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "VVS2", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "VS1", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "VS2", "ppc": 35100}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "H", "clarity": "SI1", "ppc": 33300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "IF", "ppc": 40500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "VVS1", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "VVS2", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "VS1", "ppc": 35100}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "VS2", "ppc": 33300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "I", "clarity": "SI1", "ppc": 31500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "IF", "ppc": 38700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "VVS1", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "VVS2", "ppc": 35100}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "VS1", "ppc": 33300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "VS2", "ppc": 31500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "J", "clarity": "SI1", "ppc": 29700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "IF", "ppc": 36900}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "VVS1", "ppc": 35100}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "VVS2", "ppc": 33300}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "VS1", "ppc": 31500}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "VS2", "ppc": 29700}, {"ctFrom": 0.9, "ctTo": 0.99, "color": "K", "clarity": "SI1", "ppc": 27900}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "IF", "ppc": 72000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "VVS1", "ppc": 63000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "VVS2", "ppc": 55800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "VS1", "ppc": 51300}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "VS2", "ppc": 48600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "D", "clarity": "SI1", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "IF", "ppc": 63000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "VVS1", "ppc": 55800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "VVS2", "ppc": 51300}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "VS1", "ppc": 48600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "VS2", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "E", "clarity": "SI1", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "IF", "ppc": 55800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "VVS1", "ppc": 51300}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "VVS2", "ppc": 48600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "VS1", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "VS2", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "F", "clarity": "SI1", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "IF", "ppc": 51300}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "VVS1", "ppc": 48600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "VVS2", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "VS1", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "VS2", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "G", "clarity": "SI1", "ppc": 41400}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "IF", "ppc": 48600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "VVS1", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "VVS2", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "VS1", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "VS2", "ppc": 41400}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "H", "clarity": "SI1", "ppc": 39600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "IF", "ppc": 46800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "VVS1", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "VVS2", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "VS1", "ppc": 41400}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "VS2", "ppc": 39600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "I", "clarity": "SI1", "ppc": 37800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "IF", "ppc": 45000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "VVS1", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "VVS2", "ppc": 41400}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "VS1", "ppc": 39600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "VS2", "ppc": 37800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "J", "clarity": "SI1", "ppc": 36000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "IF", "ppc": 43200}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "VVS1", "ppc": 41400}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "VVS2", "ppc": 39600}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "VS1", "ppc": 37800}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "VS2", "ppc": 36000}, {"ctFrom": 1.0, "ctTo": 1.49, "color": "K", "clarity": "SI1", "ppc": 34200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "IF", "ppc": 72000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "VVS1", "ppc": 63000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "VVS2", "ppc": 55800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "VS1", "ppc": 51300}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "VS2", "ppc": 48600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "D", "clarity": "SI1", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "IF", "ppc": 63000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "VVS1", "ppc": 55800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "VVS2", "ppc": 51300}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "VS1", "ppc": 48600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "VS2", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "E", "clarity": "SI1", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "IF", "ppc": 55800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "VVS1", "ppc": 51300}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "VVS2", "ppc": 48600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "VS1", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "VS2", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "F", "clarity": "SI1", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "IF", "ppc": 51300}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "VVS1", "ppc": 48600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "VVS2", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "VS1", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "VS2", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "G", "clarity": "SI1", "ppc": 41400}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "IF", "ppc": 48600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "VVS1", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "VVS2", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "VS1", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "VS2", "ppc": 41400}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "H", "clarity": "SI1", "ppc": 39600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "IF", "ppc": 46800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "VVS1", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "VVS2", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "VS1", "ppc": 41400}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "VS2", "ppc": 39600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "I", "clarity": "SI1", "ppc": 37800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "IF", "ppc": 45000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "VVS1", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "VVS2", "ppc": 41400}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "VS1", "ppc": 39600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "VS2", "ppc": 37800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "J", "clarity": "SI1", "ppc": 36000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "IF", "ppc": 43200}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "VVS1", "ppc": 41400}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "VVS2", "ppc": 39600}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "VS1", "ppc": 37800}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "VS2", "ppc": 36000}, {"ctFrom": 1.5, "ctTo": 1.99, "color": "K", "clarity": "SI1", "ppc": 34200}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "IF", "ppc": 108000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "VVS1", "ppc": 90000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "VVS2", "ppc": 81000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "VS1", "ppc": 63000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "VS2", "ppc": 54000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "D", "clarity": "SI1", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "IF", "ppc": 90000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "VVS1", "ppc": 81000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "VVS2", "ppc": 63000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "VS1", "ppc": 54000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "VS2", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "E", "clarity": "SI1", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "IF", "ppc": 81000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "VVS1", "ppc": 63000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "VVS2", "ppc": 54000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "VS1", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "VS2", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "F", "clarity": "SI1", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "IF", "ppc": 63000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "VVS1", "ppc": 54000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "VVS2", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "VS1", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "VS2", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "G", "clarity": "SI1", "ppc": 45900}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "IF", "ppc": 54000}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "VVS1", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "VVS2", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "VS1", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "VS2", "ppc": 45900}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "H", "clarity": "SI1", "ppc": 44100}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "IF", "ppc": 51300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "VVS1", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "VVS2", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "VS1", "ppc": 45900}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "VS2", "ppc": 44100}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "I", "clarity": "SI1", "ppc": 42300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "IF", "ppc": 49500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "VVS1", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "VVS2", "ppc": 45900}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "VS1", "ppc": 44100}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "VS2", "ppc": 42300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "J", "clarity": "SI1", "ppc": 40500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "IF", "ppc": 47700}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "VVS1", "ppc": 45900}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "VVS2", "ppc": 44100}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "VS1", "ppc": 42300}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "VS2", "ppc": 40500}, {"ctFrom": 2.0, "ctTo": 2.99, "color": "K", "clarity": "SI1", "ppc": 38700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "IF", "ppc": 180000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "VVS1", "ppc": 117000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "VVS2", "ppc": 72000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "VS1", "ppc": 63000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "VS2", "ppc": 54000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "D", "clarity": "SI1", "ppc": 51300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "IF", "ppc": 117000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "VVS1", "ppc": 72000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "VVS2", "ppc": 63000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "VS1", "ppc": 54000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "VS2", "ppc": 51300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "E", "clarity": "SI1", "ppc": 49500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "IF", "ppc": 108000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "VVS1", "ppc": 63000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "VVS2", "ppc": 54000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "VS1", "ppc": 51300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "VS2", "ppc": 49500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "F", "clarity": "SI1", "ppc": 47700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "IF", "ppc": 99000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "VVS1", "ppc": 54000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "VVS2", "ppc": 51300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "VS1", "ppc": 49500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "VS2", "ppc": 47700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "G", "clarity": "SI1", "ppc": 45900}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "IF", "ppc": 90000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "VVS1", "ppc": 51300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "VVS2", "ppc": 49500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "VS1", "ppc": 47700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "VS2", "ppc": 45900}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "H", "clarity": "SI1", "ppc": 44100}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "IF", "ppc": 81000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "VVS1", "ppc": 49500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "VVS2", "ppc": 47700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "VS1", "ppc": 45900}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "VS2", "ppc": 44100}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "I", "clarity": "SI1", "ppc": 42300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "IF", "ppc": 72000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "VVS1", "ppc": 47700}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "VVS2", "ppc": 45900}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "VS1", "ppc": 44100}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "VS2", "ppc": 42300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "J", "clarity": "SI1", "ppc": 40500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "IF", "ppc": 63000}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "VVS1", "ppc": 45900}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "VVS2", "ppc": 44100}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "VS1", "ppc": 42300}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "VS2", "ppc": 40500}, {"ctFrom": 3.0, "ctTo": 3.99, "color": "K", "clarity": "SI1", "ppc": 38700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "IF", "ppc": 180000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "VVS1", "ppc": 117000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "VVS2", "ppc": 72000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "VS1", "ppc": 63000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "VS2", "ppc": 54000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "D", "clarity": "SI1", "ppc": 51300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "IF", "ppc": 117000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "VVS1", "ppc": 72000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "VVS2", "ppc": 63000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "VS1", "ppc": 54000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "VS2", "ppc": 51300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "E", "clarity": "SI1", "ppc": 49500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "IF", "ppc": 108000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "VVS1", "ppc": 63000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "VVS2", "ppc": 54000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "VS1", "ppc": 51300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "VS2", "ppc": 49500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "F", "clarity": "SI1", "ppc": 47700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "IF", "ppc": 99000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "VVS1", "ppc": 54000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "VVS2", "ppc": 51300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "VS1", "ppc": 49500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "VS2", "ppc": 47700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "G", "clarity": "SI1", "ppc": 45900}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "IF", "ppc": 90000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "VVS1", "ppc": 51300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "VVS2", "ppc": 49500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "VS1", "ppc": 47700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "VS2", "ppc": 45900}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "H", "clarity": "SI1", "ppc": 44100}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "IF", "ppc": 81000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "VVS1", "ppc": 49500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "VVS2", "ppc": 47700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "VS1", "ppc": 45900}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "VS2", "ppc": 44100}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "I", "clarity": "SI1", "ppc": 42300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "IF", "ppc": 72000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "VVS1", "ppc": 47700}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "VVS2", "ppc": 45900}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "VS1", "ppc": 44100}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "VS2", "ppc": 42300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "J", "clarity": "SI1", "ppc": 40500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "IF", "ppc": 63000}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "VVS1", "ppc": 45900}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "VVS2", "ppc": 44100}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "VS1", "ppc": 42300}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "VS2", "ppc": 40500}, {"ctFrom": 4.0, "ctTo": 4.99, "color": "K", "clarity": "SI1", "ppc": 38700}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "IF", "ppc": 360000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "VVS1", "ppc": 162000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "VVS2", "ppc": 135000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "VS1", "ppc": 117000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "VS2", "ppc": 108000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "D", "clarity": "SI1", "ppc": 105300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "IF", "ppc": 297000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "VVS1", "ppc": 108000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "VVS2", "ppc": 81000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "VS1", "ppc": 72000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "VS2", "ppc": 63000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "E", "clarity": "SI1", "ppc": 60300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "IF", "ppc": 270000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "VVS1", "ppc": 99000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "VVS2", "ppc": 72000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "VS1", "ppc": 63000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "VS2", "ppc": 60300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "F", "clarity": "SI1", "ppc": 58500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "IF", "ppc": 261000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "VVS1", "ppc": 90000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "VVS2", "ppc": 63000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "VS1", "ppc": 60300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "VS2", "ppc": 58500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "G", "clarity": "SI1", "ppc": 56700}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "IF", "ppc": 252000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "VVS1", "ppc": 85500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "VVS2", "ppc": 60300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "VS1", "ppc": 58500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "VS2", "ppc": 56700}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "H", "clarity": "SI1", "ppc": 54900}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "IF", "ppc": 243000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "VVS1", "ppc": 81000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "VVS2", "ppc": 58500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "VS1", "ppc": 56700}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "VS2", "ppc": 54900}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "I", "clarity": "SI1", "ppc": 53100}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "IF", "ppc": 234000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "VVS1", "ppc": 76500}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "VVS2", "ppc": 56700}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "VS1", "ppc": 54900}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "VS2", "ppc": 53100}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "J", "clarity": "SI1", "ppc": 51300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "IF", "ppc": 225000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "VVS1", "ppc": 72000}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "VVS2", "ppc": 54900}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "VS1", "ppc": 53100}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "VS2", "ppc": 51300}, {"ctFrom": 5.0, "ctTo": 9.99, "color": "K", "clarity": "SI1", "ppc": 49500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "IF", "ppc": 378000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "VVS1", "ppc": 206000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "VVS2", "ppc": 143000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "VS1", "ppc": 134000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "VS2", "ppc": 125000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "D", "clarity": "SI1", "ppc": 116000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "IF", "ppc": 342000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "VVS1", "ppc": 143000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "VVS2", "ppc": 116000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "VS1", "ppc": 80000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "VS2", "ppc": 66500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "E", "clarity": "SI1", "ppc": 62000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "IF", "ppc": 324000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "VVS1", "ppc": 134000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "VVS2", "ppc": 80000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "VS1", "ppc": 66500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "VS2", "ppc": 62000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "F", "clarity": "SI1", "ppc": 60200}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "IF", "ppc": 306000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "VVS1", "ppc": 125000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "VVS2", "ppc": 66500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "VS1", "ppc": 62000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "VS2", "ppc": 60200}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "G", "clarity": "SI1", "ppc": 58400}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "IF", "ppc": 288000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "VVS1", "ppc": 120500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "VVS2", "ppc": 62000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "VS1", "ppc": 60200}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "VS2", "ppc": 58400}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "H", "clarity": "SI1", "ppc": 56600}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "IF", "ppc": 270000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "VVS1", "ppc": 116000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "VVS2", "ppc": 60200}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "VS1", "ppc": 58400}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "VS2", "ppc": 56600}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "I", "clarity": "SI1", "ppc": 54800}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "IF", "ppc": 252000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "VVS1", "ppc": 111500}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "VVS2", "ppc": 58400}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "VS1", "ppc": 56600}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "VS2", "ppc": 54800}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "J", "clarity": "SI1", "ppc": 53000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "IF", "ppc": 234000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "VVS1", "ppc": 107000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "VVS2", "ppc": 56600}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "VS1", "ppc": 54800}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "VS2", "ppc": 53000}, {"ctFrom": 10.0, "ctTo": 12.99, "color": "K", "clarity": "SI1", "ppc": 51200}];
+
+/* ══ RANGE → COLOR/CLARITY OPTIONS ══ */
+const rangeColors = {
+  '0.01-0.08':['DEF/EF','G-I','JK'],
+  '0.09-0.49':['DEF/EF','G-I','JK'],
+  '0.50-0.69':['DEF/EF','G-I','JK'],
+  '0.70-0.89':['DEF/EF','G-I','JK'],
+  '0.90-0.99':['D','E','F','G','H','I','J','K'],
+  '1.00-1.49':['D','E','F','G','H','I','J','K'],
+  '1.50-1.99':['D','E','F','G','H','I','J','K'],
+  '2.00-2.99':['D','E','F','G','H','I','J','K'],
+  '3.00-3.99':['D','E','F','G','H','I','J','K'],
+  '4.00-4.99':['D','E','F','G','H','I','J','K'],
+  '5.00-9.99':['D','E','F','G','H','I','J','K'],
+  '10.00-12.99':['D','E','F','G','H','I','J','K']
+};
+const rangeClarities = {
+  '0.01-0.08':['VVS-VS','VS','VS/SI'],
+  '0.09-0.49':['VVS-VS','VS','VS/SI'],
+  '0.50-0.69':['VVS-VS','VS','VS/SI'],
+  '0.70-0.89':['VVS-VS','VS','VS/SI'],
+  '0.90-0.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '1.00-1.49':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '1.50-1.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '2.00-2.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '3.00-3.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '4.00-4.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '5.00-9.99':['IF','VVS1','VVS2','VS1','VS2','SI1'],
+  '10.00-12.99':['IF','VVS1','VVS2','VS1','VS2','SI1']
+};
+
+let currentMatchIdx = -1;
+
+/* Update Color & Clarity dropdowns when Carat Range changes */
+function updateColorClarity(){
+  const range = document.getElementById('dCaratRange').value;
+  const colorSel   = document.getElementById('dColor');
+  const claritySel = document.getElementById('dClarity');
+
+  colorSel.innerHTML   = '<option value="">— Select —</option>';
+  claritySel.innerHTML = '<option value="">— Select —</option>';
+
+  if(range && rangeColors[range]){
+    rangeColors[range].forEach(c => {
+      colorSel.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+    rangeClarities[range].forEach(c => {
+      claritySel.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+  }
+  doMatch();
+}
+
+/* Match price from dropdowns */
+function doMatch(){
+  const range   = document.getElementById('dCaratRange').value;
+  const color   = document.getElementById('dColor').value;
+  const clarity = document.getElementById('dClarity').value;
+
+  const matchBox   = document.getElementById('priceMatchBox');
+  const noMatchBox = document.getElementById('noMatchBox');
+
+  if(!range || !color || !clarity){
+    matchBox.classList.remove('show');
+    noMatchBox.classList.remove('show');
+    currentMatchIdx = -1;
+    return;
+  }
+
+  const [ctFrom, ctTo] = range.split('-').map(parseFloat);
+  const found = priceList.findIndex(r =>
+    r.ctFrom === ctFrom && r.ctTo === ctTo &&
+    r.color === color && r.clarity === clarity
+  );
+
+  if(found >= 0){
+    const m = priceList[found];
+    currentMatchIdx = found;
+    document.getElementById('pmbPrice').textContent = '₹' + m.ppc.toLocaleString('en-IN');
+    document.getElementById('pmbDetail').textContent =
+      `${m.color} · ${m.clarity} · ${m.ctFrom}–${m.ctTo} ct · Lab Grown Diamond`;
+    updateMatchBox();
+    matchBox.classList.add('show');
+    noMatchBox.classList.remove('show');
+
+  } else {
+    currentMatchIdx = -1;
+    matchBox.classList.remove('show');
+    noMatchBox.classList.add('show');
+  }
+}
+
+function updateMatchBox(){
+  if(currentMatchIdx < 0) return;
+  const ppc   = priceList[currentMatchIdx].ppc;
+  const ct    = parseFloat(document.getElementById('dCarat').value) || 0;
+  const count = parseInt(document.getElementById('dCount').value) || 1;
+  const totalEl = document.getElementById('pmbTotal');
+  if(ct > 0){
+    const total = ppc * ct * count;
+    totalEl.innerHTML = `${count} × ${ct} ct × ₹${ppc.toLocaleString('en-IN')}/ct = <span>₹${fmt(total)}</span>`;
+  } else {
+    totalEl.innerHTML = '';
+  }
+}
+
+/* Price table hidden — data used internally only */
+
+/* ══ STONE MODE TOGGLE ══ */
+let stoneMode = 'single'; // 'single' | 'multi'
+let msRows = [];
+let msRowId = 0;
+
+function switchStoneMode(mode){
+  stoneMode = mode;
+  document.getElementById('toggleSingle').classList.toggle('active', mode==='single');
+  document.getElementById('toggleMulti').classList.toggle('active', mode==='multi');
+  document.getElementById('singleStoneSection').style.display = mode==='single' ? '' : 'none';
+  document.getElementById('multiStoneSection').style.display  = mode==='multi'  ? '' : 'none';
+}
+
+/* ── Multi-stone row management ── */
+const CT_RANGES = ['0.01-0.08','0.09-0.49','0.50-0.69','0.70-0.89','0.90-0.99',
+  '1.00-1.49','1.50-1.99','2.00-2.99','3.00-3.99','4.00-4.99','5.00-9.99','10.00-12.99'];
+
+function ctRangeOptions(sel=''){
+  return CT_RANGES.map(r=>`<option value="${r}" ${r===sel?'selected':''}>${r}</option>`).join('');
+}
+
+function colorOptsForRange(range, sel=''){
+  const cols = rangeColors[range] || [];
+  return '<option value="">—</option>' + cols.map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join('');
+}
+
+function clarityOptsForRange(range, sel=''){
+  const clars = rangeClarities[range] || [];
+  return '<option value="">—</option>' + clars.map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join('');
+}
+
+function addStoneRow(){
+  msRowId++;
+  const id = msRowId;
+  msRows.push({id});
+  renderMsTable();
+  // focus first select of new row
+  setTimeout(()=>{ const el=document.getElementById('ms_range_'+id); if(el) el.focus(); },50);
+}
+
+function deleteStoneRow(id){
+  msRows = msRows.filter(r=>r.id!==id);
+  renderMsTable();
+}
+
+function onMsRangeChange(id){
+  const range = document.getElementById('ms_range_'+id).value;
+  document.getElementById('ms_color_'+id).innerHTML   = colorOptsForRange(range);
+  document.getElementById('ms_clarity_'+id).innerHTML = clarityOptsForRange(range);
+  matchMsRow(id);
+}
+
+function matchMsRow(id){
+  const range   = document.getElementById('ms_range_'+id)?.value || '';
+  const color   = document.getElementById('ms_color_'+id)?.value || '';
+  const clarity = document.getElementById('ms_clarity_'+id)?.value || '';
+  const ct      = parseFloat(document.getElementById('ms_ct_'+id)?.value)||0;
+  const count   = parseInt(document.getElementById('ms_count_'+id)?.value)||1;
+
+  const ppcEl   = document.getElementById('ms_ppc_'+id);
+  const totEl   = document.getElementById('ms_tot_'+id);
+  const stEl    = document.getElementById('ms_st_'+id);
+
+  if(!range||!color||!clarity){ if(ppcEl) ppcEl.textContent='—'; if(totEl) totEl.textContent='—'; if(stEl) stEl.innerHTML=''; updateMsGrand(); return; }
+
+  const [cf,ct2] = range.split('-').map(parseFloat);
+  const found = priceList.findIndex(r=> r.ctFrom===cf && r.ctTo===ct2 && r.color===color && r.clarity===clarity);
+
+  if(found>=0){
+    const ppc = priceList[found].ppc;
+    const tot = ppc * ct * count;
+    if(ppcEl) ppcEl.textContent = '₹'+ppc.toLocaleString('en-IN');
+    if(totEl) totEl.textContent = ct>0 ? '₹'+fmt(tot) : '—';
+    if(stEl)  stEl.innerHTML = '<span class="match-ok">✓</span>';
+  } else {
+    if(ppcEl) ppcEl.textContent='—';
+    if(totEl) totEl.textContent='—';
+    if(stEl)  stEl.innerHTML = '<span class="match-no">✕</span>';
+  }
+  updateMsGrand();
+}
+
+function updateMsGrand(){
+  let total = 0;
+  msRows.forEach(r=>{
+    const range   = document.getElementById('ms_range_'+r.id)?.value||'';
+    const color   = document.getElementById('ms_color_'+r.id)?.value||'';
+    const clarity = document.getElementById('ms_clarity_'+r.id)?.value||'';
+    const ct      = parseFloat(document.getElementById('ms_ct_'+r.id)?.value)||0;
+    const count   = parseInt(document.getElementById('ms_count_'+r.id)?.value)||1;
+    if(!range||!color||!clarity||!ct) return;
+    const [cf,ct2] = range.split('-').map(parseFloat);
+    const found = priceList.findIndex(r2=> r2.ctFrom===cf && r2.ctTo===ct2 && r2.color===color && r2.clarity===clarity);
+    if(found>=0) total += priceList[found].ppc * ct * count;
+  });
+  const grandEl = document.getElementById('msGrand');
+  const valEl   = document.getElementById('msGrandTotal');
+  if(grandEl) grandEl.style.display = msRows.length>0 ? 'flex' : 'none';
+  if(valEl)   valEl.textContent = '₹'+fmt(total);
+  return total;
+}
+
+function getMsTotal(){
+  return updateMsGrand();
+}
+
+function renderMsTable(){
+  const body = document.getElementById('msTableBody');
+  if(!body) return;
+  body.innerHTML = msRows.map((r,i) => `
+    <tr id="ms_row_${r.id}">
+      <td style="color:var(--txt3);font-size:.6rem;padding-left:8px">${i+1}</td>
+      <td>
+        <select id="ms_range_${r.id}" onchange="onMsRangeChange(${r.id})">
+          <option value="">— Select —</option>
+          ${ctRangeOptions()}
+        </select>
+      </td>
+      <td><select id="ms_color_${r.id}"   onchange="matchMsRow(${r.id})"><option value="">—</option></select></td>
+      <td><select id="ms_clarity_${r.id}" onchange="matchMsRow(${r.id})"><option value="">—</option></select></td>
+      <td><input type="number" id="ms_ct_${r.id}"    min="0.001" step="0.001" placeholder="ct"  oninput="matchMsRow(${r.id})" style="width:58px"></td>
+      <td><input type="number" id="ms_count_${r.id}" min="1"     value="1"    placeholder="qty" oninput="matchMsRow(${r.id})" style="width:46px"></td>
+      <td class="ppc-cell" id="ms_ppc_${r.id}">—</td>
+      <td class="total-cell" id="ms_tot_${r.id}">—</td>
+      <td id="ms_st_${r.id}"><button class="del-row-btn" onclick="deleteStoneRow(${r.id})">✕</button></td>
+    </tr>`).join('');
+  updateMsGrand();
+}
+
+// Init with 2 rows
+addStoneRow();
+addStoneRow();
+
+/* ══ SUBTYPES ══ */
+const ALL_STYLES={"Solitaire": [1.0, "\ud83d\udc8e", "Single centre stone, clean and classic"], "Halo": [1.12, "\u2728", "Centre stone surrounded by small diamonds"], "Three-Stone": [1.08, "\ud83d\udd37", "Three stones \u2014 past, present and future"], "Pave": [1.06, "\ud83c\udf1f", "Surface covered in small diamonds"], "Channel Set": [1.04, "\u2b1b", "Diamonds set in a metal groove channel"], "Bezel Set": [1.03, "\u2b55", "Stone fully enclosed in metal rim"], "Prong Set": [1.02, "\ud83d\udd29", "Stone held by metal prongs or claws"], "Cluster": [1.07, "\ud83c\udf47", "Group of stones arranged together"], "Eternity": [1.09, "\ud83d\udd01", "Diamonds all the way around"], "Half Eternity": [1.05, "\ud83c\udf19", "Diamonds on top half only"], "Invisible Set": [1.15, "\ud83d\udd2e", "No visible metal between stones"], "Vintage/Antique": [1.18, "\ud83c\udfdb", "Inspired by historical eras"], "Floral": [1.1, "\ud83c\udf38", "Flower motif with diamonds"], "Geometric": [1.08, "\ud83d\udcd0", "Angular and art deco patterns"], "Custom": [1.2, "\u270f", "Bespoke \u2014 unique crafted design"], "Tennis": [1.06, "\ud83d\udcab", "Continuous line of diamonds"], "Station": [1.04, "\ud83d\udd18", "Evenly spaced diamonds along chain"], "Layered": [1.05, "\ud83d\udcff", "Multi-strand layered design"], "Bar Set": [1.04, "\ud83d\udd32", "Stones separated by vertical bars"], "Twisted/Spiral": [1.06, "\ud83c\udf00", "Twisted band with diamonds"], "Openwork": [1.07, "\ud83d\udd78", "Decorative cut-out lattice pattern"], "Filigree": [1.1, "\ud83e\udea1", "Intricate wirework design"], "Chandelier": [1.12, "\ud83d\udd6f", "Multi-tier ornate drop design"], "Drop": [1.06, "\ud83d\udca7", "Hanging drop below earlobe"], "Huggie": [1.04, "\ud83e\udd1d", "Small hoop hugging the earlobe"], "Jhumka": [1.08, "\ud83d\udd14", "Bell-shaped traditional drop"], "Traditional": [1.05, "\ud83e\udeac", "Classic Indian traditional style"], "Bridal Set": [1.18, "\ud83d\udc8d", "Matching bridal jewellery set"]};
+const CATEGORY_STYLES={"ring": ["Solitaire", "Halo", "Three-Stone", "Pave", "Channel Set", "Bezel Set", "Prong Set", "Cluster", "Eternity", "Half Eternity", "Invisible Set", "Vintage/Antique", "Floral", "Geometric", "Custom"], "necklace": ["Solitaire", "Pave", "Channel Set", "Cluster", "Eternity", "Half Eternity", "Tennis", "Station", "Layered", "Vintage/Antique", "Floral", "Geometric", "Custom"], "pendant": ["Solitaire", "Halo", "Three-Stone", "Pave", "Bezel Set", "Prong Set", "Cluster", "Invisible Set", "Vintage/Antique", "Floral", "Geometric", "Custom"], "earring": ["Solitaire", "Halo", "Pave", "Cluster", "Bezel Set", "Invisible Set", "Vintage/Antique", "Floral", "Drop", "Chandelier", "Huggie", "Jhumka", "Custom"], "bangle": ["Solitaire", "Pave", "Channel Set", "Bezel Set", "Eternity", "Half Eternity", "Invisible Set", "Vintage/Antique", "Floral", "Geometric", "Twisted/Spiral", "Openwork", "Custom"], "bracelet": ["Pave", "Channel Set", "Bezel Set", "Eternity", "Half Eternity", "Tennis", "Station", "Invisible Set", "Vintage/Antique", "Floral", "Geometric", "Twisted/Spiral", "Custom"], "other": ["Solitaire", "Pave", "Bezel Set", "Cluster", "Traditional", "Vintage/Antique", "Custom"]};
+const SUBTYPE_STYLES={"Engagement Ring": ["Solitaire", "Halo", "Three-Stone", "Pave", "Bezel Set", "Prong Set", "Vintage/Antique", "Custom"], "Solitaire Ring": ["Solitaire", "Bezel Set", "Prong Set", "Custom"], "Wedding Band": ["Eternity", "Half Eternity", "Pave", "Channel Set", "Custom"], "Anniversary Ring": ["Eternity", "Halo", "Three-Stone", "Cluster", "Vintage/Antique", "Custom"], "Promise Ring": ["Solitaire", "Halo", "Pave", "Custom"], "Eternity Ring": ["Eternity", "Half Eternity", "Pave", "Channel Set", "Bezel Set"], "Half Eternity Ring": ["Half Eternity", "Pave", "Channel Set", "Bezel Set"], "Halo Ring": ["Halo", "Pave", "Vintage/Antique", "Custom"], "Three-Stone Ring": ["Three-Stone", "Halo", "Custom"], "Pav\u00e9 Ring": ["Pave", "Channel Set", "Custom"], "Channel Set Ring": ["Channel Set", "Pave", "Custom"], "Bezel Set Ring": ["Bezel Set", "Solitaire", "Custom"], "Prong / Claw Set Ring": ["Prong Set", "Solitaire", "Custom"], "Tension Set Ring": ["Solitaire", "Bezel Set", "Custom"], "Cluster Ring": ["Cluster", "Floral", "Vintage/Antique", "Custom"], "Cocktail / Statement Ring": ["Cluster", "Pave", "Vintage/Antique", "Geometric", "Floral", "Custom"], "Stackable Ring": ["Pave", "Eternity", "Half Eternity", "Custom"], "Vintage / Antique Ring": ["Vintage/Antique", "Filigree", "Floral", "Geometric", "Custom"], "Diamond Ring": ["Solitaire", "Halo", "Three-Stone", "Pave", "Cluster", "Vintage/Antique", "Custom"], "Plain Gold Ring": ["Custom"], "Kada / Broad Band Ring": ["Pave", "Eternity", "Custom"], "Tennis Necklace": ["Tennis", "Pave", "Channel Set", "Bezel Set"], "Riviera Necklace": ["Station", "Pave", "Custom"], "Station Necklace": ["Station", "Bezel Set", "Pave", "Custom"], "Cluster Necklace": ["Cluster", "Floral", "Custom"], "Eternity Necklace": ["Eternity", "Half Eternity", "Pave"], "Layered / Multi-strand Necklace": ["Layered", "Station", "Custom"], "Mangalsutra": ["Traditional", "Solitaire", "Pave", "Custom"], "Floral Diamond Necklace": ["Floral", "Cluster", "Custom"], "Bar Necklace": ["Bar Set", "Pave", "Custom"], "Solitaire Pendant": ["Solitaire", "Bezel Set", "Prong Set", "Custom"], "Halo Pendant": ["Halo", "Pave", "Custom"], "Three-Stone Pendant": ["Three-Stone", "Custom"], "Heart Pendant": ["Solitaire", "Pave", "Bezel Set", "Custom"], "Teardrop / Pear Pendant": ["Solitaire", "Halo", "Custom"], "Floral Pendant": ["Floral", "Cluster", "Custom"], "Geometric Pendant": ["Geometric", "Vintage/Antique", "Custom"], "Locket Pendant": ["Solitaire", "Custom"], "Bar Pendant": ["Bar Set", "Pave", "Custom"], "Mangalsutra Pendant": ["Traditional", "Solitaire", "Custom"], "Stud Earrings": ["Solitaire", "Halo", "Pave", "Bezel Set", "Cluster"], "Drop Earrings": ["Solitaire", "Halo", "Pave", "Vintage/Antique", "Drop", "Custom"], "Dangle Earrings": ["Drop", "Chandelier", "Vintage/Antique", "Custom"], "Chandelier Earrings": ["Chandelier", "Vintage/Antique", "Floral", "Custom"], "Hoop Earrings": ["Pave", "Bezel Set", "Custom"], "Huggie Earrings": ["Pave", "Huggie", "Custom"], "Jhumka": ["Jhumka", "Traditional", "Custom"], "Jhumki": ["Jhumka", "Traditional", "Custom"], "Chandbali": ["Traditional", "Vintage/Antique", "Custom"], "Bridal Earrings": ["Bridal Set", "Chandelier", "Jhumka", "Vintage/Antique", "Custom"], "Party / Cocktail Earrings": ["Chandelier", "Cluster", "Drop", "Vintage/Antique", "Custom"], "Solitaire Diamond Bangle": ["Solitaire", "Halo", "Bezel Set"], "Eternity Diamond Bangle": ["Eternity", "Pave", "Channel Set", "Bezel Set"], "Half Eternity Bangle": ["Half Eternity", "Pave", "Channel Set"], "Pav\u00e9 Diamond Bangle": ["Pave", "Custom"], "Tennis Bangle": ["Tennis", "Bezel Set", "Channel Set"], "Floral Diamond Bangle": ["Floral", "Cluster", "Custom"], "Geometric Diamond Bangle": ["Geometric", "Vintage/Antique", "Custom"], "Twisted / Spiral Diamond Bangle": ["Twisted/Spiral", "Custom"], "Bridal Diamond Bangle": ["Bridal Set", "Traditional", "Vintage/Antique", "Custom"], "Stackable Diamond Bangle Set": ["Pave", "Eternity", "Custom"], "Tennis Bracelet": ["Tennis", "Bezel Set", "Channel Set", "Pave"], "Pav\u00e9 Diamond Bracelet": ["Pave", "Custom"], "Eternity Diamond Bracelet": ["Eternity", "Half Eternity"], "Station Diamond Bracelet": ["Station", "Bezel Set", "Custom"], "Floral Diamond Bracelet": ["Floral", "Cluster", "Custom"], "Geometric Diamond Bracelet": ["Geometric", "Vintage/Antique", "Custom"], "Twisted / Spiral Diamond Bracelet": ["Twisted/Spiral", "Custom"], "Bridal Diamond Bracelet": ["Bridal Set", "Custom"], "Stackable Diamond Bracelet Set": ["Pave", "Eternity", "Custom"]};
+const subtypes={
+  ring:[
+    // By Occasion
+    'Engagement Ring','Wedding Band','Anniversary Ring','Promise Ring','Eternity Ring','Half Eternity Ring',
+    // By Setting Style
+    'Solitaire Ring','Halo Ring','Three-Stone Ring','Pavé Ring','Channel Set Ring',
+    'Bezel Set Ring','Prong / Claw Set Ring','Tension Set Ring','Cluster Ring',
+    // By Design Style
+    'Cocktail / Statement Ring','Stackable Ring','Vintage / Antique Ring',
+    // By Cultural Style
+    'Kada / Broad Band Ring','Thumb Ring','Midi Ring','Toe Ring / Bichhiya',
+    // By Stone
+    'Diamond Ring','Gemstone Ring','Plain Gold Ring','Two-tone / Mixed Metal Ring'
+  ],
+  necklace:[
+    // By Length
+    'Collar Necklace (14")','Choker (16")','Princess Necklace (18")','Matinee Necklace (20-24")',
+    'Opera Necklace (28-36")','Rope Necklace (36"+)',
+    // By Setting Style
+    'Tennis Necklace','Riviera Necklace','Pavé Diamond Necklace',
+    'Channel Set Necklace','Station Necklace','Cluster Necklace',
+    'Eternity Necklace','Invisible Set Necklace',
+    // By Design
+    'Layered / Multi-strand Necklace','Mangalsutra','Y-Necklace',
+    'Floral Diamond Necklace','Geometric Diamond Necklace',
+    'Graduated Diamond Necklace','Bar Necklace',
+    // By Diamond Type
+    'Natural Diamond Necklace','Lab Grown Diamond Necklace',
+    'Polki Necklace','Rose Cut Diamond Necklace',
+    // By Occasion
+    'Bridal Diamond Necklace','Everyday Diamond Necklace',
+    'Cocktail / Statement Necklace','Office / Formal Necklace'
+  ],
+  pendant:[
+    // By Setting Style
+    'Solitaire Pendant','Halo Pendant','Pavé Pendant',
+    'Bezel Set Pendant','Prong Set Pendant','Cluster Pendant',
+    'Invisible Set Pendant','Three-Stone Pendant',
+    // By Shape / Design
+    'Round Pendant','Heart Pendant','Teardrop / Pear Pendant',
+    'Oval Pendant','Marquise Pendant','Cross Pendant',
+    'Initial / Letter Pendant','Floral Pendant',
+    'Geometric Pendant','Locket Pendant','Bar Pendant',
+    'Mangalsutra Pendant','Evil Eye Pendant','Star Pendant',
+    // By Diamond Type
+    'Natural Diamond Pendant','Lab Grown Diamond Pendant',
+    'Polki Pendant','Rose Cut Diamond Pendant',
+    // By Occasion
+    'Bridal Pendant','Everyday Pendant',
+    'Cocktail / Statement Pendant','Office / Formal Pendant'
+  ],
+  earring:[
+    // By Fitting / Back Type
+    'Stud Earrings','Hoop Earrings','Huggie Earrings','Clip-on Earrings',
+    'Screw-back Earrings','French Wire / Hook Earrings','Lever Back Earrings',
+    // By Style / Hang
+    'Drop Earrings','Dangle Earrings','Chandelier Earrings',
+    'Ear Climber / Crawler','Ear Cuff','Threader Earrings','Jacket Earrings',
+    // By Placement
+    'Lobe Earrings','Cartilage Earrings','Tragus Earrings',
+    'Industrial / Bar Earrings','Helix Earrings',
+    // Indian / Traditional
+    'Jhumka','Jhumki','Chandbali','Bali','Kaan / Tops',
+    'Polki Earrings','Kundan Earrings',
+    // By Occasion
+    'Everyday / Casual Studs','Bridal Earrings',
+    'Party / Cocktail Earrings','Office / Formal Drop Earrings'
+  ],
+  bangle:[
+    // By Setting Style
+    'Solitaire Diamond Bangle','Eternity Diamond Bangle','Half Eternity Bangle',
+    'Pavé Diamond Bangle','Channel Set Diamond Bangle','Bezel Set Diamond Bangle',
+    'Prong Set Diamond Bangle','Invisible Set Bangle',
+    // By Design / Shape
+    'Solitaire Cuff Bangle','Tennis Bangle','Hinged Diamond Bangle',
+    'Openwork / Cutwork Diamond Bangle','Floral Diamond Bangle',
+    'Geometric Diamond Bangle','Twisted / Spiral Diamond Bangle',
+    // By Diamond Type
+    'Natural Diamond Bangle','Lab Grown Diamond Bangle',
+    'Polki Bangle','Rose Cut Diamond Bangle','Briolette Diamond Bangle',
+    // By Occasion
+    'Bridal Diamond Bangle','Everyday Diamond Bangle',
+    'Cocktail / Statement Diamond Bangle','Stackable Diamond Bangle Set'
+  ],
+  bracelet:[
+    // By Setting Style
+    'Tennis Bracelet','Pavé Diamond Bracelet','Channel Set Diamond Bracelet',
+    'Bezel Set Diamond Bracelet','Prong Set Diamond Bracelet',
+    'Invisible Set Diamond Bracelet','Eternity Diamond Bracelet',
+    'Half Eternity Diamond Bracelet','Cluster Diamond Bracelet',
+    'Station Diamond Bracelet',
+    // By Design / Shape
+    'Solitaire Diamond Bracelet','Floral Diamond Bracelet',
+    'Geometric Diamond Bracelet','Openwork / Cutwork Diamond Bracelet',
+    'Twisted / Spiral Diamond Bracelet','Bar Diamond Bracelet',
+    'Layered / Multi-strand Diamond Bracelet',
+    // By Diamond Type
+    'Natural Diamond Bracelet','Lab Grown Diamond Bracelet',
+    'Polki Bracelet','Rose Cut Diamond Bracelet','Briolette Diamond Bracelet',
+    // By Occasion
+    'Bridal Diamond Bracelet','Everyday Diamond Bracelet',
+    'Cocktail / Statement Diamond Bracelet',
+    'Stackable Diamond Bracelet Set','Office / Formal Diamond Bracelet'
+  ],
+  other:['Nose Pin / Nath','Anklet / Payal','Maangtika','Brooch','Loose Stone','Pendant (no chain)','Waist Belt / Kamarband']
+};
+function updateSubtype(){
+  const cat = document.getElementById('jewCat').value;
+  const s = document.getElementById('jewSub');
+  s.innerHTML = subtypes[cat].map(x=>`<option>${x}</option>`).join('');
+  updateDesignPills(cat);
+}
+
+function updateDesignPills(cat, subtype){
+  const grid = document.getElementById('designPills');
+  if(!grid) return;
+  const sub   = subtype || document.getElementById('jewSub')?.value || '';
+  const names = SUBTYPE_STYLES[sub] || CATEGORY_STYLES[cat] || CATEGORY_STYLES['other'];
+  const pills = names.map(function(n){
+    var d = ALL_STYLES[n] || [1.00,'💎',''];
+    return [n, d[0], d[1], d[2]];
+  });
+  grid.innerHTML = pills.map(function(p, i){
+    return '<div class="design-pill '+(i===0?'active':'')+'" data-val="'+p[1]+'" data-name="'+p[0]+'" data-desc="'+(p[3]||'')+'" onclick="selectDesignPill(this)">'+
+      '<span class="dp-icon">'+(p[2]||'💎')+'</span>'+
+      '<span class="dp-name">'+p[0]+'</span>'+
+      '<span class="dp-mult">x'+parseFloat(p[1]).toFixed(2)+'</span>'+
+    '</div>';
+  }).join('');
+  if(pills.length>0){
+    designMult = pills[0][1];
+    showDesignBar(pills[0][0], pills[0][1], pills[0][3]||'');
+  }
+}
+
+/* ══ GOLD + LABOUR ══ */
+// Fallback IBJA rates (19 Mar 2026) — updated by fetchGoldRates()
+var IBJA = {24:15488, 22:14187, 18:11616, 14:9060};
+let labourManual = false;
+
+async function fetchGoldRates(){
+  var statusEl = document.getElementById('ibjaStatus');
+  try {
+    // Fetch ibjarates.com via CORS proxy
+    var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://ibjarates.com');
+    var res = await fetch(proxyUrl);
+    var data = await res.json();
+    var html = data.contents || '';
+
+    // Parse rates from the page HTML
+    // Pattern: 999 Purity ### XXXXX (1 Gram)
+    var r999 = html.match(/999\s*Purity[\s\S]*?###\s*([\d,]+)\s*\(1 Gram\)/);
+    var r916 = html.match(/916\s*Purity[\s\S]*?###\s*([\d,]+)\s*\(1 Gram\)/);
+    var r750 = html.match(/750\s*Purity[\s\S]*?###\s*([\d,]+)\s*\(1 Gram\)/);
+    var r585 = html.match(/585\s*Purity[\s\S]*?###\s*([\d,]+)\s*\(1 Gram\)/);
+
+    if(r999 && r916 && r750 && r585){
+      var g24 = parseInt(r999[1].replace(/,/g,''));
+      var g22 = parseInt(r916[1].replace(/,/g,''));
+      var g18 = parseInt(r750[1].replace(/,/g,''));
+      var g14 = parseInt(r585[1].replace(/,/g,''));
+
+      if(g24 > 5000 && g22 > 5000){
+        IBJA = {24: g24, 22: g22, 18: g18, 14: g14};
+        updateGoldDisplay();
+        var today = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+        if(statusEl) statusEl.innerHTML = 'Source: <a href="https://ibjarates.com" target="_blank" style="color:#70D890;text-decoration:underline">ibjarates.com</a> · ' + today + ' — Click to select purity';
+        return;
+      }
+    }
+    throw new Error('Parse failed');
+  } catch(e) {
+    // Fallback: try second CORS proxy
+    try {
+      var proxy2 = 'https://corsproxy.io/?' + encodeURIComponent('https://ibjarates.com');
+      var res2 = await fetch(proxy2);
+      var html2 = await res2.text();
+      var m999 = html2.match(/999\s*Purity[\s\S]*?<h3>([\d,]+)/);
+      var m916 = html2.match(/916\s*Purity[\s\S]*?<h3>([\d,]+)/);
+      var m750 = html2.match(/750\s*Purity[\s\S]*?<h3>([\d,]+)/);
+      var m585 = html2.match(/585\s*Purity[\s\S]*?<h3>([\d,]+)/);
+      if(m999 && m916){
+        IBJA = {
+          24: parseInt(m999[1].replace(/,/g,'')),
+          22: parseInt(m916[1].replace(/,/g,'')),
+          18: m750 ? parseInt(m750[1].replace(/,/g,'')) : Math.round(parseInt(m999[1].replace(/,/g,''))*0.75),
+          14: m585 ? parseInt(m585[1].replace(/,/g,'')) : Math.round(parseInt(m999[1].replace(/,/g,''))*0.585)
+        };
+        updateGoldDisplay();
+        var today2 = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+        if(statusEl) statusEl.innerHTML = 'Source: <a href="https://ibjarates.com" target="_blank" style="color:#70D890;text-decoration:underline">ibjarates.com</a> · ' + today2 + ' — Click to select purity';
+        return;
+      }
+    } catch(e2){}
+    // Final fallback — use stored rates silently
+    var todayF = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    if(statusEl) statusEl.innerHTML = 'Source: <a href="https://ibjarates.com" target="_blank" style="color:#70D890;text-decoration:underline">ibjarates.com</a> · ' + todayF + ' (cached) — Click to select purity';
+  }
+}
+
+function updateGoldDisplay(){
+  var fmt = function(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); };
+  var el24 = document.getElementById('grv_24'); if(el24) el24.textContent = fmt(IBJA[24]);
+  var el22 = document.getElementById('grv_22'); if(el22) el22.textContent = fmt(IBJA[22]);
+  var el18 = document.getElementById('grv_18'); if(el18) el18.textContent = fmt(IBJA[18]);
+  var el14 = document.getElementById('grv_14'); if(el14) el14.textContent = fmt(IBJA[14]);
+  // Update the active gold rate input
+  var purity = parseInt(document.getElementById('goldPurity').value) || 22;
+  document.getElementById('goldRate').value = IBJA[purity];
+  calcLabour();
+}
+
+function selectGold(karat){
+  // Remove selected from all
+  [24,22,18,14].forEach(k => document.getElementById('gr_'+k).classList.remove('selected'));
+  // Add selected to clicked
+  document.getElementById('gr_'+karat).classList.add('selected');
+  // Update hidden input and rate
+  document.getElementById('goldPurity').value = karat;
+  document.getElementById('goldRate').value = IBJA[karat];
+  calcLabour();
+}
+
+function syncRate(){
+  const k = parseInt(document.getElementById('goldPurity').value);
+  document.getElementById('goldRate').value = IBJA[k];
+  calcLabour();
+}
+function calcLabour(){
+  const wt = parseFloat(document.getElementById('goldWt').value)||0;
+  const rt = parseFloat(document.getElementById('goldRate').value)||0;
+  document.getElementById('goldCostDisp').value = '₹' + fmt(wt*rt);
+  if(!labourManual){
+    const lr = parseFloat(document.getElementById('labourRate').value)||3600;
+    document.getElementById('labourAmt').value = Math.round(wt*lr);
+  }
+}
+document.getElementById('goldWt').addEventListener('input', calcLabour);
+document.getElementById('goldRate').addEventListener('input', calcLabour);
+calcLabour();
+
+/* ══ CALCULATE ══ */
+function calculate(){
+  const qty       = parseInt(document.getElementById('qty').value)||1;
+  // Diamond cost — single or multi mode
+  let diamondCost = 0;
+  let dCarat = 0, dCount = 1, dPPC = 0;
+  if(stoneMode === 'single'){
+    dCarat = parseFloat(document.getElementById('dCarat').value)||0;
+    dCount = parseInt(document.getElementById('dCount').value)||1;
+    dPPC   = currentMatchIdx >= 0 ? priceList[currentMatchIdx].ppc : 0;
+    diamondCost = dCarat * dPPC * dCount;
+  } else {
+    diamondCost = getMsTotal();
+    dCarat = 0; dPPC = 0; dCount = 0;
+  }
+  const goldWt    = parseFloat(document.getElementById('goldWt').value)||0;
+  const goldRate  = parseFloat(document.getElementById('goldRate').value)||0;
+  const labour    = parseFloat(document.getElementById('labourAmt').value)||0;
+  const plating   = parseFloat(document.getElementById('plating').value)||0;
+  const extras    = parseFloat(document.getElementById('extras').value)||0;
+  const gst       = parseFloat(document.getElementById('gst').value)/100;
+  const tcs       = parseFloat(document.getElementById('tcs').value)/100;
+
+  if(stoneMode==='single' && !dPPC && dCarat > 0){ alert('Please select a valid Color, Clarity and Carat Range to get the diamond price.'); return; }
+
+  const goldBase    = goldWt * goldRate;
+  const goldFinal   = goldBase;
+  const sub         = diamondCost + goldFinal + labour + plating + extras;
+  const afterMargin = sub * designMult; // design style multiplier
+  // Get selected design style name
+  const activePill = document.querySelector('#designPills .pill.active');
+  const designName = activePill ? activePill.textContent.trim() : 'Solitaire';
+  const gstAmt      = afterMargin * gst;
+  const tcsAmt      = (afterMargin + gstAmt) * tcs;
+  const finalOne    = afterMargin + gstAmt + tcsAmt;
+  const finalTotal  = finalOne * qty;
+
+  // Populate 3 summary boxes
+  const goldWithWastage = goldFinal;
+  document.getElementById('sbDiamond').textContent = '₹' + fmt(diamondCost);
+  document.getElementById('sbDiamondSub').innerHTML = (stoneMode==='single'
+    ? `${dCount} × ${dCarat} ct × ₹${dPPC.toLocaleString('en-IN')}/ct`
+    : `${msRows.length} stone row(s)`) + ` · ${designName}`;
+  document.getElementById('sbGold').textContent = '₹' + fmt(goldWithWastage);
+  document.getElementById('sbGoldSub').innerHTML =
+    `${goldWt}g · ${document.getElementById('goldPurity').value}K · ₹${fmt(goldRate)}/g`;
+  document.getElementById('sbMaking').textContent = '₹' + fmt(labour + plating + extras);
+  document.getElementById('sbMakingSub').innerHTML =
+    `Labour ₹${fmt(labour)}<br>Plating ₹${fmt(plating)} · Other ₹${fmt(extras)}`;
+  document.getElementById('summaryBoxes').style.display = 'grid';
+
+  document.getElementById('finalPrice').textContent = '₹' + fmt(finalOne);
+  document.getElementById('priceRange').textContent = qty > 1
+    ? `₹${fmt(finalOne)} × ${qty} = ₹${fmt(finalTotal)} total`
+    : `Range: ₹${fmt(finalOne*.90)} – ₹${fmt(finalOne*1.12)}`;
+
+  document.getElementById('breakdown').innerHTML = [
+    {l:'Diamond Value',          v:'₹'+fmt(diamondCost) + (stoneMode==='multi'?' ('+msRows.length+' rows)':'')},
+    {l:'Design Style',             v:designName + ' (×'+designMult.toFixed(2)+')'},
+    {l:'Gold Metal Cost',        v:'₹'+fmt(goldBase)},
+    {l:'Labour / Making',        v:'₹'+fmt(labour)},
+    {l:'Plating + Extras',       v:'₹'+fmt(plating+extras)},
+    {l:`GST (${(gst*100).toFixed(0)}%)`,  v:'₹'+fmt(gstAmt)},
+    {l:`TCS (${(tcs*100).toFixed(1)}%)`,  v:'₹'+fmt(tcsAmt)},
+  ].map(b=>`<div class="bk"><div class="bl">${b.l}</div><div class="bv">${b.v}</div></div>`).join('');
+
+  document.getElementById('formula').innerHTML =
+    `<b>Formula:</b> (Diamond ₹${fmt(diamondCost)} + Gold ₹${fmt(goldFinal)} + Labour ₹${fmt(labour)} + Extras ₹${fmt(plating+extras)}) × Design: ${designName}(${designMult.toFixed(2)}) + GST + TCS = <b>₹${fmt(finalOne)}</b>`;
+
+  const oldPhotos=document.getElementById('result').querySelector('.result-photos'); if(oldPhotos) oldPhotos.remove();
+  const rpDiv=document.createElement('div');rpDiv.className='result-photos';rpDiv.innerHTML=getPhotosForResult();document.getElementById('result').querySelector('.disc').after(rpDiv);
+  document.getElementById('result').classList.add('show');
+}
+
+function fmt(n){
+  n = Math.round(n);
+  if(n >= 1e7) return (n/1e7).toFixed(2)+' Cr';
+  if(n >= 1e5) return (n/1e5).toFixed(2)+' L';
+  return n.toLocaleString('en-IN');
+}
+
+
+const PHOTO_IDS = {"ring": "photo-1605100804763-247f67b3557e", "necklace": "photo-1599643478518-a784e5dc4c8f", "pendant": "photo-1611085583191-a3b181a88401", "earring": "photo-1535632066927-ab7c9ab60908", "bangle": "photo-1611591437281-460bfbe1220a", "bracelet": "photo-1573408301185-9519f94816b5", "other": "photo-1515562141207-7a88fb7ce338", "Engagement Ring": "photo-1515562141207-7a88fb7ce338", "Solitaire Ring": "photo-1605100804763-247f67b3557e", "Wedding Band": "photo-1588345921523-c2dcdb7f1dcd", "Halo Ring": "photo-1583937443604-6a5d01831d3d", "Three-Stone Ring": "photo-1601121141461-9d6647bef0a4", "Eternity Ring": "photo-1598560917807-1bae44bd2be8", "Half Eternity Ring": "photo-1603974372039-adc49044b6bd", "Vintage / Antique Ring": "photo-1561828995-aa79a2db86dd", "Cocktail / Statement Ring": "photo-1561828995-aa79a2db86dd", "Diamond Ring": "photo-1605100804763-247f67b3557e", "Stud Earrings": "photo-1535632066927-ab7c9ab60908", "Drop Earrings": "photo-1535632066927-ab7c9ab60908", "Chandelier Earrings": "photo-1535632066927-ab7c9ab60908", "Bridal Earrings": "photo-1535632066927-ab7c9ab60908", "Tennis Necklace": "photo-1599643478518-a784e5dc4c8f", "Mangalsutra": "photo-1599643478518-a784e5dc4c8f", "Tennis Bracelet": "photo-1573408301185-9519f94816b5", "Eternity Diamond Bangle": "photo-1611591437281-460bfbe1220a", "Solitaire": "photo-1605100804763-247f67b3557e", "Halo": "photo-1583937443604-6a5d01831d3d", "Three-Stone": "photo-1601121141461-9d6647bef0a4", "Pave": "photo-1603974372039-adc49044b6bd", "Channel Set": "photo-1598560917807-1bae44bd2be8", "Bezel Set": "photo-1617038220319-276d3cfab638", "Prong Set": "photo-1605100804763-247f67b3557e", "Cluster": "photo-1617038220319-276d3cfab638", "Eternity": "photo-1598560917807-1bae44bd2be8", "Half Eternity": "photo-1603974372039-adc49044b6bd", "Invisible Set": "photo-1515562141207-7a88fb7ce338", "Vintage/Antique": "photo-1561828995-aa79a2db86dd", "Floral": "photo-1583937443604-6a5d01831d3d", "Geometric": "photo-1617038220319-276d3cfab638", "Custom": "photo-1605100804763-247f67b3557e", "Tennis": "photo-1573408301185-9519f94816b5", "Station": "photo-1599643478518-a784e5dc4c8f", "Layered": "photo-1599643477049-a6aa1b4cdf67", "Drop": "photo-1535632066927-ab7c9ab60908", "Chandelier": "photo-1535632066927-ab7c9ab60908", "Jhumka": "photo-1535632066927-ab7c9ab60908", "Traditional": "photo-1599643478518-a784e5dc4c8f", "Bridal Set": "photo-1515562141207-7a88fb7ce338", "Twisted/Spiral": "photo-1611591437281-460bfbe1220a"};
+
+function getUnsplashUrl(key, w, h){
+  w = w || 400; h = h || 400;
+  var id = PHOTO_IDS[key];
+  if(id) return 'https://images.unsplash.com/' + id + '?w=' + w + '&h=' + h + '&fit=crop&q=80&auto=format';
+  var q = (UNSPLASH_QUERIES && UNSPLASH_QUERIES[key]) ? UNSPLASH_QUERIES[key] : 'diamond+jewellery';
+  return 'https://source.unsplash.com/' + w + 'x' + h + '/?' + q;
+}
+
+function selectPhotoCategory(cat){
+  var mainImg = document.getElementById('photoMain');
+  var lbl     = document.getElementById('pgSelectedLabel');
+  if(!mainImg) return;
+  var url = getUnsplashUrl(cat, 250, 250);
+  mainImg.style.opacity = '0';
+  mainImg.src = url;
+  mainImg.onload  = function(){ mainImg.style.opacity = '1'; };
+  mainImg.onerror = function(){
+    mainImg.src = 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=250&h=250&fit=crop&q=80&auto=format';
+    mainImg.style.opacity = '1';
+  };
+  if(lbl) lbl.textContent = cat;
+}
+
+/* Init */
+/* ══ PHOTO GALLERY ══ */
+const UNSPLASH_QUERIES = {"ring": "diamond+ring+jewellery", "necklace": "diamond+necklace+jewellery", "pendant": "diamond+pendant+necklace", "earring": "diamond+earrings+jewellery", "bangle": "gold+diamond+bangle", "bracelet": "diamond+bracelet+jewellery", "other": "diamond+jewellery+luxury", "Engagement Ring": "diamond+engagement+ring", "Solitaire Ring": "solitaire+diamond+ring", "Wedding Band": "wedding+band+gold+diamond", "Anniversary Ring": "anniversary+diamond+ring", "Promise Ring": "promise+ring+diamond", "Eternity Ring": "eternity+diamond+ring", "Half Eternity Ring": "half+eternity+diamond+ring", "Halo Ring": "halo+diamond+ring", "Three-Stone Ring": "three+stone+diamond+ring", "Pavé Ring": "pave+diamond+ring", "Channel Set Ring": "channel+set+diamond+ring", "Bezel Set Ring": "bezel+diamond+ring", "Prong / Claw Set Ring": "prong+diamond+ring", "Tension Set Ring": "tension+set+diamond+ring", "Cluster Ring": "cluster+diamond+ring", "Cocktail / Statement Ring": "cocktail+statement+diamond+ring", "Stackable Ring": "stackable+rings+diamond", "Vintage / Antique Ring": "vintage+antique+diamond+ring", "Diamond Ring": "diamond+ring+luxury", "Plain Gold Ring": "plain+gold+ring", "Kada / Broad Band Ring": "gold+kada+band+ring", "Thumb Ring": "thumb+ring+diamond", "Midi Ring": "midi+ring+diamond", "Toe Ring / Bichhiya": "toe+ring+gold", "Tennis Necklace": "tennis+diamond+necklace", "Riviera Necklace": "riviera+diamond+necklace", "Station Necklace": "station+diamond+necklace", "Cluster Necklace": "cluster+diamond+necklace", "Eternity Necklace": "eternity+diamond+necklace", "Layered / Multi-strand Necklace": "layered+necklace+diamond", "Mangalsutra": "mangalsutra+diamond+gold", "Floral Diamond Necklace": "floral+diamond+necklace", "Bar Necklace": "bar+diamond+necklace", "Choker": "diamond+choker+necklace", "Long Chain": "long+diamond+chain+necklace", "Collar Necklace (14\")": "collar+diamond+necklace", "Solitaire Pendant": "solitaire+diamond+pendant", "Halo Pendant": "halo+diamond+pendant", "Three-Stone Pendant": "three+stone+diamond+pendant", "Heart Pendant": "heart+diamond+pendant", "Teardrop / Pear Pendant": "pear+teardrop+diamond+pendant", "Floral Pendant": "floral+diamond+pendant", "Geometric Pendant": "geometric+diamond+pendant", "Locket Pendant": "locket+diamond+pendant", "Bar Pendant": "bar+diamond+pendant", "Mangalsutra Pendant": "mangalsutra+diamond+pendant", "Stud Earrings": "diamond+stud+earrings", "Drop Earrings": "diamond+drop+earrings", "Dangle Earrings": "diamond+dangle+earrings", "Chandelier Earrings": "chandelier+diamond+earrings", "Hoop Earrings": "diamond+hoop+earrings", "Huggie Earrings": "huggie+diamond+earrings", "Ear Cuff": "diamond+ear+cuff", "Jhumka": "jhumka+diamond+earrings", "Jhumki": "jhumki+diamond+gold", "Chandbali": "chandbali+diamond+earrings", "Bridal Earrings": "bridal+diamond+earrings", "Party / Cocktail Earrings": "cocktail+diamond+earrings", "Solitaire Diamond Bangle": "solitaire+diamond+bangle", "Eternity Diamond Bangle": "eternity+diamond+bangle", "Half Eternity Bangle": "half+eternity+diamond+bangle", "Pavé Diamond Bangle": "pave+diamond+bangle", "Tennis Bangle": "tennis+diamond+bangle", "Hinged Diamond Bangle": "hinged+diamond+bangle", "Floral Diamond Bangle": "floral+diamond+bangle", "Geometric Diamond Bangle": "geometric+diamond+bangle", "Twisted / Spiral Diamond Bangle": "twisted+diamond+bangle", "Bridal Diamond Bangle": "bridal+diamond+bangle", "Stackable Diamond Bangle Set": "stackable+diamond+bangle", "Tennis Bracelet": "tennis+diamond+bracelet", "Pavé Diamond Bracelet": "pave+diamond+bracelet", "Eternity Diamond Bracelet": "eternity+diamond+bracelet", "Station Diamond Bracelet": "station+diamond+bracelet", "Floral Diamond Bracelet": "floral+diamond+bracelet", "Geometric Diamond Bracelet": "geometric+diamond+bracelet", "Twisted / Spiral Diamond Bracelet": "twisted+diamond+bracelet", "Bridal Diamond Bracelet": "bridal+diamond+bracelet", "Stackable Diamond Bracelet Set": "stackable+diamond+bracelet", "Solitaire": "solitaire+diamond+ring+jewellery", "Halo": "halo+diamond+engagement+ring", "Three-Stone": "three+stone+diamond+ring", "Pave": "pave+diamond+jewellery", "Channel Set": "channel+set+diamond+jewellery", "Bezel Set": "bezel+set+diamond+jewellery", "Prong Set": "prong+set+diamond+ring", "Cluster": "cluster+diamond+jewellery", "Eternity": "eternity+diamond+band", "Half Eternity": "half+eternity+diamond+ring", "Invisible Set": "invisible+set+diamond+jewellery", "Vintage/Antique": "vintage+antique+diamond+ring", "Floral": "floral+diamond+jewellery", "Geometric": "geometric+diamond+jewellery", "Custom": "custom+diamond+jewellery+luxury", "Tennis": "tennis+diamond+bracelet+necklace", "Station": "station+diamond+necklace", "Layered": "layered+diamond+necklace", "Chandelier": "chandelier+diamond+earrings", "Drop": "drop+diamond+earrings", "Traditional": "traditional+diamond+gold+jewellery", "Bridal Set": "bridal+diamond+jewellery+set", "Twisted/Spiral": "twisted+spiral+diamond+bangle", "Openwork": "openwork+diamond+jewellery"};
+
+const CATEGORY_LABELS = {
+  ring:'Ring', necklace:'Necklace', pendant:'Pendant',
+  earring:'Earrings', bangle:'Bangle', bracelet:'Bracelet', other:'Other',
+  'Solitaire':'Solitaire', 'Halo':'Halo', 'Three-Stone':'Three-Stone',
+  'Pavé':'Pavé', 'Channel Set':'Channel Set', 'Bezel Set':'Bezel Set',
+  'Vintage':'Vintage / Antique', 'Custom':'Custom Design'
+};
+
+let ownPhotos = [];
+let ownPhotoId = 0;
+
+function initPhotoThumbs(){ /* thumbnails removed */ }
+
+function selectPhotoCategory(cat){
+  const mainImg   = document.getElementById('photoMain');
+if(!mainImg) return;
+  const url = PHOTO_MAP[cat] || PHOTO_MAP['ring'];
+  mainImg.style.opacity = '0';
+  setTimeout(()=>{ mainImg.src = url; mainImg.style.opacity = '1'; }, 200);
+  document.querySelectorAll('.ptb-thumb').forEach(t => t.classList.remove('active'));
+  const safeKey = cat.replace(/[^a-zA-Z]/g,'_');
+  const el = document.getElementById('pt_'+cat) || document.getElementById('pt_'+safeKey);
+  if(el){ el.classList.add('active'); el.scrollIntoView({inline:'nearest', behavior:'smooth'}); }
+}
+
+function handleOwnPhoto(files){
+  if(!files || !files.length) return;
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      ownPhotoId++;
+      ownPhotos.push({ id: ownPhotoId, dataUrl: e.target.result });
+      renderOwnPhotos();
+      if(ownPhotos.length === 1){
+        const m = document.getElementById('photoMain');
+        if(m){ m.src = e.target.result; }
+        }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderOwnPhotos(){
+  const strip = document.getElementById('uploadedStrip');
+  if(!strip) return;
+  strip.innerHTML = ownPhotos.map(p => `
+    <div class="ptb-own-item">
+      <img src="${p.dataUrl}" onclick="(function(){var m=document.getElementById('photoMain');if(m){m.style.opacity=0;setTimeout(()=>{m.src='${p.dataUrl}';m.style.opacity=1;},150);}})()" style="cursor:pointer">
+      <button class="od" onclick="ownPhotos=ownPhotos.filter(x=>x.id!=${p.id});renderOwnPhotos()">✕</button>
+    </div>`).join('');
+}
+
+function getPhotosForResult(){
+  const captionEl = document.getElementById('photoCaption');
+  const caption   = captionEl ? captionEl.value.trim() : '';
+  const mainImg   = document.getElementById('photoMain');
+  const mainSrc   = mainImg ? mainImg.src : '';
+  const owned     = ownPhotos.map(p =>
+    `<img src="${p.dataUrl}" style="width:64px;height:64px;object-fit:cover;border-radius:2px;border:1px solid #252538">`
+  ).join('');
+  return `<div style="margin-top:14px;padding-top:12px;border-top:1px solid #252538">
+    ${caption ? `<div style="font-size:.56rem;color:#9A94A8;margin-bottom:8px;letter-spacing:.06em">${caption}</div>` : ''}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start">
+      ${mainSrc ? `<img src="${mainSrc}" style="width:100px;height:100px;object-fit:cover;border-radius:2px;border:1px solid #C9A84C">` : ''}
+      ${owned}
+    </div>
+  </div>`;
+}
+
+/* Sync photo when jewellery category dropdown changes */
+document.getElementById('jewCat').addEventListener('change', function(){
+  const cat = this.value;
+  if(PHOTO_MAP[cat]) selectPhotoCategory(cat);
+});
+
+
+/* ══ DESIGN PHOTO GALLERY ══ */
+
+
+
+
+
+
+
+
+
+
+function updatePhoto(){
+  var cat = (document.getElementById('jewCat') || {}).value || 'ring';
+  var sub = (document.getElementById('jewSub') || {}).value || '';
+  // Priority: subtype photo first, then category
+  var key = (sub && PHOTO_IDS[sub]) ? sub : cat;
+  selectPhotoCategory(key);
+  var lbl = document.getElementById('pgSelectedLabel');
+  if(lbl) lbl.textContent = sub || cat;
+}
+
+/* ══════════════════════════════════
+   INIT — run after all functions defined
+══════════════════════════════════ */
+(function init(){
+  updateSubtype();
+  fetchGoldRates();
+  setTimeout(function(){
+      }, 100);
+})();
+</script>
+</body>
+</html>
